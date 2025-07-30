@@ -7,7 +7,7 @@ import { ArrowLeft, Shield } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
 import { useState } from 'react';
-import { signInWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
@@ -43,6 +43,28 @@ export default function LoginPage() {
     }
   }
 
+  const handleSignUp = async () => {
+    setLoading(true);
+    setError(null);
+    try {
+      await createUserWithEmailAndPassword(auth, email, password);
+      toast({
+        title: "Account Created",
+        description: "Login successful. Redirecting to the homepage.",
+      });
+      router.push('/');
+    } catch (error: any) {
+      setError(error.message);
+      toast({
+        variant: "destructive",
+        title: "Sign-up Failed",
+        description: error.message,
+      });
+    } finally {
+      setLoading(false);
+    }
+  };
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
       <div className="absolute top-4 left-4">
@@ -73,10 +95,13 @@ export default function LoginPage() {
             </div>
             {error && <p className="text-sm text-destructive">{error}</p>}
             </CardContent>
-            <CardFooter className="flex flex-col">
-            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
-                {loading ? 'Logging in...' : 'Secure Login'}
-            </Button>
+            <CardFooter className="flex flex-col gap-4">
+              <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
+                  {loading ? 'Logging in...' : 'Secure Login'}
+              </Button>
+              <Button type="button" variant="outline" className="w-full" onClick={handleSignUp} disabled={loading}>
+                {loading ? 'Creating Account...' : 'Create Admin Account'}
+              </Button>
             </CardFooter>
         </form>
       </Card>
