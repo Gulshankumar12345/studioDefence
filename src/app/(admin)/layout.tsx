@@ -4,9 +4,12 @@ import { useEffect, useState } from 'react';
 import { usePathname, useRouter } from 'next/navigation';
 import { onAuthStateChanged, User } from 'firebase/auth';
 import { auth } from '@/lib/firebase';
-import SiteHeader from '@/components/site-header';
-import SiteFooter from '@/components/site-footer';
 import { Skeleton } from '@/components/ui/skeleton';
+import { Button } from '@/components/ui/button';
+import { LayoutDashboard, LogOut, Shield } from 'lucide-react';
+import Link from 'next/link';
+import { useToast } from '@/hooks/use-toast';
+
 
 export default function AdminLayout({
   children,
@@ -15,67 +18,75 @@ export default function AdminLayout({
 }) {
   const router = useRouter();
   const pathname = usePathname();
+  const { toast } = useToast();
   const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        // If the user is not authenticated, and they are not already on the login page, redirect them.
-        if (pathname !== '/login') {
-            router.push('/login');
-        } else {
-            // If they are on the login page, we can stop loading.
-            setLoading(false);
-        }
-      } else {
-        // If the user is authenticated, set the user and stop loading.
+      if (user) {
         setUser(user);
-        setLoading(false);
-        // If the user is logged in and tries to access the login page, redirect them to the dashboard.
-        if (pathname === '/login') {
-            router.push('/dashboard');
-        }
+      } else {
+        router.push('/login');
       }
+      setLoading(false);
     });
 
     return () => unsubscribe();
-  }, [router, pathname]);
+  }, [router]);
 
-  // While checking auth state, show a loading skeleton.
+  const handleLogout = async () => {
+    try {
+      await auth.signOut();
+      toast({
+        title: "Logged Out",
+        description: "You have been successfully logged out.",
+      });
+      router.push('/login');
+    } catch (error) {
+       toast({
+        variant: "destructive",
+        title: "Logout Failed",
+        description: "There was an error logging you out.",
+      });
+    }
+  };
+
   if (loading) {
     return (
-        <div className="flex flex-col min-h-screen">
-            <SiteHeader />
-            <main className="flex-1 container mx-auto px-4 py-8">
-                 <div className="space-y-4">
-                    <Skeleton className="h-8 w-1/4" />
-                    <Skeleton className="h-32 w-full" />
-                </div>
-            </main>
-            <SiteFooter />
+        <div className="flex min-h-screen items-center justify-center bg-secondary">
+            <Skeleton className="h-32 w-full max-w-sm" />
         </div>
     );
   }
-
-  // If there's no user and we are not on the login page, the redirect is happening.
-  // Return null to avoid rendering children. The login page will be rendered on its own.
-  if (!user && pathname !== '/login') {
-    return null;
-  }
   
-  // For the login page, we don't want to render the main layout with headers/footers.
-  if (pathname === '/login') {
-      return <>{children}</>;
+  if (!user) {
+      return null;
   }
 
-
-  // If the user is authenticated, render the layout with the children.
   return (
-    <div className="relative flex min-h-screen flex-col bg-background">
-      <SiteHeader />
-      <main className="flex-1">{children}</main>
-      <SiteFooter />
+    <div className="flex min-h-screen">
+      <aside className="w-64 bg-card border-r p-4 flex flex-col">
+        <div className="flex items-center gap-2 mb-8">
+             <Shield className="h-8 w-8 text-accent" />
+            <h1 className="text-xl font-bold font-headline">NILKAN Admin</h1>
+        </div>
+        <nav className="flex flex-col gap-2 flex-grow">
+            <Button asChild variant={pathname === '/dashboard' ? 'secondary' : 'ghost'} className="justify-start">
+                <Link href="/dashboard">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Dashboard
+                </Link>
+            </Button>
+        </nav>
+        <Button variant="ghost" onClick={handleLogout} className="justify-start">
+            <LogOut className="mr-2 h-4 w-4" />
+            Logout
+        </Button>
+      </aside>
+      <main className="flex-1 bg-secondary p-8">
+        {children}
+      </main>
     </div>
   );
 }

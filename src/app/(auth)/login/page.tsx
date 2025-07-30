@@ -3,11 +3,10 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardDescription, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import { ArrowLeft, Shield } from "lucide-react";
-import Link from "next/link";
+import { Shield } from "lucide-react";
 import { useRouter } from "next/navigation";
-import { useState } from 'react';
-import { signInWithEmailAndPassword, createUserWithEmailAndPassword } from "firebase/auth";
+import { useState, useEffect } from 'react';
+import { signInWithEmailAndPassword, createUserWithEmailAndPassword, onAuthStateChanged } from "firebase/auth";
 import { auth } from "@/lib/firebase";
 import { useToast } from "@/hooks/use-toast";
 
@@ -19,6 +18,19 @@ export default function LoginPage() {
   const [password, setPassword] = useState('');
   const [error, setError] = useState<string | null>(null);
   const [loading, setLoading] = useState(false);
+  const [checkingAuth, setCheckingAuth] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+        if (user) {
+            router.push('/dashboard');
+        } else {
+            setCheckingAuth(false);
+        }
+    });
+    return () => unsubscribe();
+  }, [router]);
+
 
   const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
@@ -28,9 +40,9 @@ export default function LoginPage() {
       await signInWithEmailAndPassword(auth, email, password);
       toast({
         title: "Login Successful",
-        description: "Redirecting to the homepage.",
+        description: "Redirecting to the dashboard.",
       });
-      router.push('/');
+      router.push('/dashboard');
     } catch (error: any) {
       setError(error.message);
       toast({
@@ -50,9 +62,9 @@ export default function LoginPage() {
       await createUserWithEmailAndPassword(auth, email, password);
       toast({
         title: "Account Created",
-        description: "Login successful. Redirecting to the homepage.",
+        description: "Login successful. Redirecting to the dashboard.",
       });
-      router.push('/');
+      router.push('/dashboard');
     } catch (error: any) {
       setError(error.message);
       toast({
@@ -65,16 +77,12 @@ export default function LoginPage() {
     }
   };
 
+  if (checkingAuth) {
+      return <div className="flex min-h-screen items-center justify-center bg-secondary"></div>
+  }
+
   return (
     <div className="flex min-h-screen items-center justify-center bg-secondary p-4">
-      <div className="absolute top-4 left-4">
-          <Button asChild variant="ghost">
-              <Link href="/">
-                  <ArrowLeft className="mr-2 h-4 w-4" />
-                  Back to Home
-              </Link>
-          </Button>
-      </div>
       <Card className="w-full max-w-sm">
         <CardHeader className="text-center">
             <div className="flex justify-center mb-4">
