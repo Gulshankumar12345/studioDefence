@@ -70,7 +70,7 @@ export default function AboutPage() {
               <Card key={member.name} className="text-center pt-6 max-w-sm">
                 <CardContent className="flex flex-col items-center">
                   <Avatar className="w-24 h-24 mb-4">
-                    <AvatarImage src={member.image} alt={member.name} />
+                    <AvatarImage src={member.image} alt={member.name} data-ai-hint={member.hint} />
                     <AvatarFallback>{member.name.charAt(0)}</AvatarFallback>
                   </Avatar>
                   <h4 className="text-lg font-semibold font-headline text-primary">{member.name}</h4>
