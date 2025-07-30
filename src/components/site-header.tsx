@@ -15,9 +15,9 @@ import { useRouter } from 'next/navigation';
 
 const navLinks = [
   { href: '/', label: 'Home' },
-  { href: '/about', label: 'About Us' },
   { href: '/projects', label: 'Projects' },
   { href: '/contact', label: 'Contact' },
+  { href: '/about', label: 'About Us' },
 ];
 
 const SiteHeader = () => {
