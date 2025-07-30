@@ -6,17 +6,41 @@ import { Label } from "@/components/ui/label";
 import { ArrowLeft, Shield } from "lucide-react";
 import Link from "next/link";
 import { useRouter } from "next/navigation";
+import { useState } from 'react';
+import { signInWithEmailAndPassword } from "firebase/auth";
+import { auth } from "@/lib/firebase";
+import { useToast } from "@/hooks/use-toast";
 
 
 export default function LoginPage() {
   const router = useRouter();
+  const { toast } = useToast();
+  const [email, setEmail] = useState('');
+  const [password, setPassword] = useState('');
+  const [error, setError] = useState<string | null>(null);
+  const [loading, setLoading] = useState(false);
 
-  const handleLogin = (e: React.FormEvent) => {
+  const handleLogin = async (e: React.FormEvent) => {
     e.preventDefault();
-    // In a real app, you'd handle authentication here.
-    // For this demo, we'll just redirect to a conceptual admin dashboard.
-    alert('Login functionality is for demonstration only.');
-    router.push('/');
+    setLoading(true);
+    setError(null);
+    try {
+      await signInWithEmailAndPassword(auth, email, password);
+      toast({
+        title: "Login Successful",
+        description: "Redirecting to the homepage.",
+      });
+      router.push('/');
+    } catch (error: any) {
+      setError(error.message);
+      toast({
+        variant: "destructive",
+        title: "Login Failed",
+        description: "Please check your credentials and try again.",
+      });
+    } finally {
+      setLoading(false);
+    }
   }
 
   return (
@@ -41,16 +65,17 @@ export default function LoginPage() {
             <CardContent className="space-y-4">
             <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="chandan@nilkanarms.in" required />
+                <Input id="email" type="email" placeholder="chandan@nilkanarms.in" required value={email} onChange={(e) => setEmail(e.target.value)} />
             </div>
             <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
-                <Input id="password" type="password" required />
+                <Input id="password" type="password" required value={password} onChange={(e) => setPassword(e.target.value)} />
             </div>
+            {error && <p className="text-sm text-destructive">{error}</p>}
             </CardContent>
             <CardFooter className="flex flex-col">
-            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                Secure Login
+            <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90" disabled={loading}>
+                {loading ? 'Logging in...' : 'Secure Login'}
             </Button>
             </CardFooter>
         </form>
