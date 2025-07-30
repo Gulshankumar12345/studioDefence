@@ -4,7 +4,7 @@ import { Eye, Rocket, Users } from "lucide-react";
 import Image from 'next/image';
 
 const teamMembers = [
-  { name: 'Chandan Kumar', role: 'Founder & Defence Innovator', image: 'https://placehold.co/100x100.png', hint: 'indian innovator' },
+  { name: 'Chandan Kumar', role: 'Founder & Defence Innovator', image: 'https://storage.googleapis.com/project-os-prod-public/a6133a88-751d-405b-81d1-125032f38448', hint: 'indian innovator' },
 ];
 
 export default function AboutPage() {
