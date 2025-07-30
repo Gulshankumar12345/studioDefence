@@ -1,10 +1,53 @@
+
+'use client'
+
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { CheckCircle, Crosshair, Target, ShieldCheck } from "lucide-react";
 import Image from 'next/image';
 import Link from 'next/link';
+import { useEffect, useState } from 'react';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { useRouter } from 'next/navigation';
+import { Skeleton } from '@/components/ui/skeleton';
 
 export default function Home() {
+  const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
+  const [loading, setLoading] = useState(true);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (user) => {
+      if (user) {
+        setUser(user);
+      } else {
+        router.push('/login');
+      }
+      setLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, [router]);
+
+  if (loading) {
+    return (
+       <div className="flex flex-col min-h-screen">
+            <main className="flex-1 container mx-auto px-4 py-8">
+                 <div className="space-y-4">
+                    <Skeleton className="h-8 w-1/4" />
+                    <Skeleton className="h-32 w-full" />
+                     <Skeleton className="h-32 w-full" />
+                </div>
+            </main>
+        </div>
+    )
+  }
+
+  if (!user) {
+      return null;
+  }
+  
   return (
     <div className="relative">
       <div 

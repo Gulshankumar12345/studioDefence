@@ -55,7 +55,7 @@ export default function AdminLayout({
   if (loading) {
     return (
         <div className="flex min-h-screen items-center justify-center bg-secondary">
-            <Skeleton className="h-32 w-full max-w-sm" />
+            <Skeleton className="h-screen w-full" />
         </div>
     );
   }
@@ -76,6 +76,12 @@ export default function AdminLayout({
                 <Link href="/dashboard">
                     <LayoutDashboard className="mr-2 h-4 w-4" />
                     Dashboard
+                </Link>
+            </Button>
+            <Button asChild variant={'ghost'} className="justify-start">
+                <Link href="/">
+                    <LayoutDashboard className="mr-2 h-4 w-4" />
+                    Go to site
                 </Link>
             </Button>
         </nav>
