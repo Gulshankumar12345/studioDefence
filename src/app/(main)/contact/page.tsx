@@ -52,12 +52,16 @@ export default function ContactPage() {
   async function onSubmit(values: z.infer<typeof formSchema>) {
     setIsSubmitting(true);
     try {
-      await saveContactMessage(values);
-      toast({
-        title: "Message Sent!",
-        description: "Thank you for contacting us. We will get back to you shortly.",
-      });
-      form.reset();
+      const result = await saveContactMessage(values);
+      if (result.success) {
+        toast({
+          title: "Message Sent!",
+          description: "Thank you for contacting us. We will get back to you shortly.",
+        });
+        form.reset();
+      } else {
+         throw new Error("Flow returned success: false");
+      }
     } catch (error) {
       console.error("Failed to send message:", error);
       toast({

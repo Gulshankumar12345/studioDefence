@@ -42,11 +42,14 @@ const saveContactMessageFlow = ai.defineFlow(
   },
   async (input) => {
     try {
-      await db.collection('contacts').add({
+      const result = await db.collection('contacts').add({
         ...input,
         createdAt: admin.firestore.FieldValue.serverTimestamp(),
       });
-      return {success: true};
+      if (result.id) {
+        return {success: true};
+      }
+      return {success: false};
     } catch (error) {
       console.error('Error saving contact message to Firestore:', error);
       // In a real app, you'd want more robust error handling here.
