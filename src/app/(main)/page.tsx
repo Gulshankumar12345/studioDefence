@@ -6,17 +6,26 @@ import Link from 'next/link';
 
 export default function Home() {
   return (
-    <>
+    <div className="relative">
+      <div 
+        className="absolute inset-0 z-[-1] opacity-5"
+        style={{
+          backgroundImage: `
+            radial-gradient(circle at center, hsla(var(--primary) / 0.1), transparent 60%),
+            url("data:image/svg+xml,%3Csvg width='60' height='60' viewBox='0 0 60 60' xmlns='http://www.w3.org/2000/svg'%3E%3Cg fill='none' fill-rule='evenodd'%3E%3Cg fill='%239C92AC' fill-opacity='0.1'%3E%3Cpath d='M36 34v-4h-2v4h-4v2h4v4h2v-4h4v-2h-4zm0-30V0h-2v4h-4v2h4v4h2V6h4V4h-4zM6 34v-4H4v4H0v2h4v4h2v-4h4v-2H6zM6 4V0H4v4H0v2h4v4h2V6h4V4H6z'/%3E%3C/g%3E%3C/g%3E%3C/svg%3E")
+          `
+        }}
+      ></div>
       <section className="relative h-[70vh] min-h-[500px] flex items-center justify-center text-center text-white">
         <Image 
           src="https://placehold.co/1920x1080.png" 
           alt="Indian soldier on a battlefield"
           data-ai-hint="indian soldier battlefield"
-          layout="fill"
+          fill
           objectFit="cover"
           className="absolute inset-0 z-0 opacity-40"
         />
-        <div className="absolute inset-0 bg-gradient-to-t from-black via-primary/80 to-primary/60 z-10"></div>
+        <div className="absolute inset-0 bg-gradient-to-t from-background via-primary/80 to-primary/60 z-10"></div>
         <div className="relative z-20 px-4">
           <h1 className="text-4xl md:text-6xl font-bold font-headline drop-shadow-lg">
             Innovating India&apos;s Defence Future — From Bharat to the Battlefield.
@@ -24,7 +33,7 @@ export default function Home() {
           <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-primary-foreground/90 drop-shadow-md">
             Born in Bharat, Built for Warriors.
           </p>
-          <Button asChild size="lg" className="mt-8 bg-accent text-white hover:bg-accent/90">
+          <Button asChild size="lg" className="mt-8 bg-accent text-accent-foreground hover:bg-accent/90">
             <Link href="/projects">Explore Our Innovations</Link>
           </Button>
         </div>
@@ -74,35 +83,35 @@ export default function Home() {
           <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
             We specialize in advanced, indigenous systems for modern warfare.
           </p>
-          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8 mt-12">
-            <Card className="text-left shadow-md hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <Crosshair className="w-10 h-10 text-accent" />
-                  <CardTitle className="font-headline">AI-Powered Rifles</CardTitle>
+          <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mt-12">
+            <Card className="text-center shadow-md hover:shadow-xl transition-shadow bg-card/50 backdrop-blur-sm border-primary/20">
+              <CardHeader className="items-center">
+                <div className="p-4 bg-accent/20 rounded-full">
+                  <Crosshair className="w-8 h-8 text-accent" />
                 </div>
+                <CardTitle className="font-headline pt-2">AI-Powered Rifles</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Next-gen sniper systems with integrated AI for auto-locking and enhanced precision, giving our soldiers a decisive edge.</p>
               </CardContent>
             </Card>
-            <Card className="text-left shadow-md hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <Target className="w-10 h-10 text-accent" />
-                  <CardTitle className="font-headline">Aerial Reconnaissance</CardTitle>
+            <Card className="text-center shadow-md hover:shadow-xl transition-shadow bg-card/50 backdrop-blur-sm border-primary/20">
+              <CardHeader className="items-center">
+                 <div className="p-4 bg-accent/20 rounded-full">
+                  <Target className="w-8 h-8 text-accent" />
                 </div>
+                <CardTitle className="font-headline pt-2">Aerial Reconnaissance</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Autonomous surveillance and support drones like the TRIKAL Aerial Orb, featuring AI motion detection and live tracking.</p>
               </CardContent>
             </Card>
-            <Card className="text-left shadow-md hover:shadow-xl transition-shadow">
-              <CardHeader>
-                <div className="flex items-center gap-4">
-                  <ShieldCheck className="w-10 h-10 text-accent" />
-                  <CardTitle className="font-headline">Modular Weaponry</CardTitle>
+            <Card className="text-center shadow-md hover:shadow-xl transition-shadow bg-card/50 backdrop-blur-sm border-primary/20">
+              <CardHeader className="items-center">
+                 <div className="p-4 bg-accent/20 rounded-full">
+                  <ShieldCheck className="w-8 h-8 text-accent" />
                 </div>
+                <CardTitle className="font-headline pt-2">Modular Weaponry</CardTitle>
               </CardHeader>
               <CardContent>
                 <p className="text-muted-foreground">Developing adaptable weapon platforms with modular components like folding stocks and suppressors for mission-specific versatility.</p>
@@ -111,6 +120,6 @@ export default function Home() {
           </div>
         </div>
       </section>
-    </>
+    </div>
   );
 }

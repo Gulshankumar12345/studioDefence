@@ -2,6 +2,7 @@ import type { Metadata } from 'next';
 import { PT_Sans, Space_Grotesk } from 'next/font/google';
 import './globals.css';
 import { Toaster } from '@/components/ui/toaster';
+import AdminLayout from './(admin)/layout';
 
 const ptSans = PT_Sans({
   subsets: ['latin'],
@@ -30,7 +31,9 @@ export default function RootLayout({
   return (
     <html lang="en" suppressHydrationWarning>
       <body className={`${ptSans.variable} ${spaceGrotesk.variable} font-body antialiased`}>
-        {children}
+        <AdminLayout>
+          {children}
+        </AdminLayout>
         <Toaster />
       </body>
     </html>
