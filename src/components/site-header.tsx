@@ -1,12 +1,17 @@
 'use client';
 
-import { Menu, Shield, X } from 'lucide-react';
+import { Menu, Shield, X, LayoutDashboard } from 'lucide-react';
 import Link from 'next/link';
 import { usePathname } from 'next/navigation';
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { Button } from './ui/button';
 import { Sheet, SheetContent, SheetTrigger } from './ui/sheet';
 import { cn } from '@/lib/utils';
+import { onAuthStateChanged, User, signOut } from 'firebase/auth';
+import { auth } from '@/lib/firebase';
+import { useToast } from '@/hooks/use-toast';
+import { useRouter } from 'next/navigation';
+
 
 const navLinks = [
   { href: '/', label: 'Home' },
@@ -17,9 +22,37 @@ const navLinks = [
 
 const SiteHeader = () => {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
+  const [user, setUser] = useState<User | null>(null);
   const pathname = usePathname();
+  const { toast } = useToast();
+  const router = useRouter();
 
-  const NavLink = ({ href, label, className }: { href: string; label: string; className?: string }) => (
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
+
+  const handleLogout = async () => {
+    try {
+      await signOut(auth);
+      toast({
+        title: "Logged Out",
+        description: "You have been successfully logged out.",
+      });
+      router.push('/login');
+    } catch (error) {
+      toast({
+        variant: "destructive",
+        title: "Logout Failed",
+        description: "There was an error logging you out.",
+      });
+    }
+  };
+
+  const NavLink = ({ href, label, className, onClick }: { href: string; label: string; className?: string; onClick?: () => void }) => (
     <Link
       href={href}
       className={cn(
@@ -27,7 +60,10 @@ const SiteHeader = () => {
         pathname === href ? "text-accent font-bold" : "text-primary-foreground",
         className
       )}
-      onClick={() => setIsMobileMenuOpen(false)}
+      onClick={() => {
+        setIsMobileMenuOpen(false)
+        if (onClick) onClick();
+      }}
     >
       {label}
     </Link>
@@ -45,12 +81,19 @@ const SiteHeader = () => {
           {navLinks.map((link) => (
             <NavLink key={link.href} {...link} />
           ))}
+          {user && <NavLink href="/dashboard" label="Dashboard" />}
         </nav>
 
         <div className="flex items-center gap-2">
-          <Button asChild variant="ghost" className="hidden md:inline-flex text-primary-foreground hover:bg-primary-foreground/10 hover:text-accent">
-            <Link href="/login">Admin Login</Link>
-          </Button>
+           {user ? (
+             <Button variant="ghost" onClick={handleLogout} className="hidden md:inline-flex text-primary-foreground hover:bg-primary-foreground/10 hover:text-accent">
+               Logout
+             </Button>
+           ) : (
+            <Button asChild variant="ghost" className="hidden md:inline-flex text-primary-foreground hover:bg-primary-foreground/10 hover:text-accent">
+              <Link href="/login">Admin Login</Link>
+            </Button>
+           )}
 
           <Sheet open={isMobileMenuOpen} onOpenChange={setIsMobileMenuOpen}>
             <SheetTrigger asChild className="md:hidden">
@@ -75,9 +118,17 @@ const SiteHeader = () => {
                   {navLinks.map((link) => (
                     <NavLink key={link.href} {...link} className="text-lg" />
                   ))}
-                   <Button asChild variant="outline" className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground">
-                      <Link href="/login">Admin Login</Link>
+                  {user && <NavLink href="/dashboard" label="Dashboard" className="text-lg" />}
+                   
+                   {user ? (
+                      <Button variant="outline" className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground" onClick={handleLogout}>
+                        Logout
+                      </Button>
+                   ) : (
+                    <Button asChild variant="outline" className="bg-transparent border-accent text-accent hover:bg-accent hover:text-accent-foreground">
+                      <Link href="/login" onClick={() => setIsMobileMenuOpen(false)}>Admin Login</Link>
                     </Button>
+                   )}
                 </nav>
               </div>
             </SheetContent>
