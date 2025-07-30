@@ -14,24 +14,28 @@ export default function MainLayout({
   children: React.ReactNode;
 }) {
   const router = useRouter();
+  const [user, setUser] = useState<User | null>(null);
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
     const unsubscribe = onAuthStateChanged(auth, (user) => {
-      if (!user) {
-        router.push('/login');
-      } else {
+      if (user) {
+        setUser(user);
         setLoading(false);
+      } else {
+        router.push('/login');
       }
     });
 
     return () => unsubscribe();
   }, [router]);
 
-  if (loading) {
+  if (loading || !user) {
     return (
         <div className="flex flex-col min-h-screen">
-            <SiteHeader />
+            <header className="sticky top-0 z-50 w-full border-b bg-primary/95 backdrop-blur">
+              <div className="container flex h-16 items-center"></div>
+            </header>
             <main className="flex-1 container mx-auto px-4 py-8">
                  <div className="space-y-4">
                     <Skeleton className="h-8 w-1/4" />
