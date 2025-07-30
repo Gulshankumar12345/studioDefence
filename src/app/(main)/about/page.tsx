@@ -4,10 +4,7 @@ import { Eye, Rocket, Users } from "lucide-react";
 import Image from 'next/image';
 
 const teamMembers = [
-  { name: 'Dr. A. P. J. Abdul Kalam', role: 'Chief Visionary Officer', image: 'https://placehold.co/100x100.png', hint: 'indian scientist' },
-  { name: 'Homi J. Bhabha', role: 'Head of Research & Development', image: 'https://placehold.co/100x100.png', hint: 'indian scientist portrait' },
-  { name: 'Vikram Sarabhai', role: 'Lead Aerospace Engineer', image: 'https://placehold.co/100x100.png', hint: 'indian space scientist' },
-  { name: 'C. V. Raman', role: 'Chief Scientist, Materials', image: 'https://placehold.co/100x100.png', hint: 'indian physicist' },
+  { name: 'Chandan Kumar', role: 'Founder & Defence Innovator', image: 'https://placehold.co/100x100.png', hint: 'indian innovator' },
 ];
 
 export default function AboutPage() {
@@ -15,9 +12,9 @@ export default function AboutPage() {
     <>
       <section className="bg-primary text-primary-foreground py-20">
         <div className="container mx-auto px-4 text-center">
-          <h1 className="text-4xl md:text-5xl font-bold font-headline">About Nilkanth Defence Systems</h1>
+          <h1 className="text-4xl md:text-5xl font-bold font-headline">About Us</h1>
           <p className="mt-4 text-lg md:text-xl max-w-3xl mx-auto text-primary-foreground/80">
-            Discover the story, values, and people behind our commitment to national security.
+            Learn about our vision, mission, and the story behind NILKAN.
           </p>
         </div>
       </section>
@@ -28,63 +25,49 @@ export default function AboutPage() {
             <div>
               <Image
                 src="https://placehold.co/600x450.png"
-                alt="Founding team blueprint discussion"
-                data-ai-hint="blueprint discussion"
+                alt="Blueprint of an advanced weapon system"
+                data-ai-hint="blueprint weapon"
                 width={600}
                 height={450}
                 className="rounded-lg shadow-lg"
               />
             </div>
             <div className="text-left">
-              <h2 className="text-3xl font-bold text-primary font-headline">Our Story</h2>
+              <h2 className="text-3xl font-bold text-primary font-headline">Our Story & History</h2>
               <p className="mt-4 text-muted-foreground">
-                Founded in 2020 by a group of veteran engineers and defence experts, Nilkanth Defence Systems was born from a shared desire to create a self-reliant and technologically advanced defence ecosystem in India.
+                NILKAN Arms and Aerotech Pvt. Ltd. was conceptualized by young innovator Chandan Kumar, a B.Tech CSE student and NCC LCPL, with a dream to build India’s own line of future-ready weapons. 
               </p>
               <p className="mt-4 text-muted-foreground">
-                Our journey began with a focus on unmanned aerial systems, and has since expanded to include advanced propulsion, surveillance, and cyber security. We are driven by a passion for solving complex challenges and a deep sense of duty to our nation.
+                The company name ‘NILKAN’ is a tribute to his mother Nilu and sister Kanika, while “09” in our projects signifies the elite 9 PARA SF, symbolizing courage and excellence. From a student-led vision to a startup poised for defense innovation, NILKAN represents the spirit of Aatmanirbhar Bharat and the determination to serve the nation by empowering our soldiers with the best Indian-made technology.
               </p>
             </div>
           </div>
         </div>
       </section>
 
-      <section id="vision-values" className="bg-secondary py-16 md:py-24">
+      <section id="vision-mission" className="bg-secondary py-16 md:py-24">
         <div className="container mx-auto px-4">
-          <div className="grid lg:grid-cols-2 gap-12">
-            <div className="p-8 bg-card rounded-lg shadow-md">
-              <div className="flex items-center gap-4">
+            <div className="p-8 bg-card rounded-lg shadow-md text-center">
+              <div className="flex justify-center items-center gap-4">
                 <Eye className="w-10 h-10 text-accent" />
-                <h3 className="text-2xl font-bold font-headline text-primary">Our Vision</h3>
+                <h3 className="text-2xl font-bold font-headline text-primary">Our Mission</h3>
               </div>
-              <p className="mt-4 text-muted-foreground">
-                To be a global leader in defence technology, recognized for our innovative spirit, unwavering integrity, and significant contributions to world peace and security.
+              <p className="mt-4 text-muted-foreground max-w-4xl mx-auto">
+                To revolutionize India’s defense landscape by designing and developing next-generation indigenous weapon systems and aerospace technologies, empowering our armed forces with unmatched precision, innovation, and self-reliance.
               </p>
             </div>
-            <div className="p-8 bg-card rounded-lg shadow-md">
-              <div className="flex items-center gap-4">
-                <Rocket className="w-10 h-10 text-accent" />
-                 <h3 className="text-2xl font-bold font-headline text-primary">Our Values</h3>
-              </div>
-              <ul className="mt-4 space-y-2 text-muted-foreground">
-                <li><strong>Integrity:</strong> Upholding the highest ethical standards in all our actions.</li>
-                <li><strong>Excellence:</strong> Striving for the pinnacle of quality and performance.</li>
-                <li><strong>Innovation:</strong> Fostering a culture of creativity and continuous improvement.</li>
-                <li><strong>Collaboration:</strong> Working as a unified team to achieve common goals.</li>
-              </ul>
-            </div>
-          </div>
         </div>
       </section>
 
       <section id="team" className="py-16 md:py-24">
         <div className="container mx-auto px-4 text-center">
-          <h2 className="text-3xl font-bold text-primary font-headline">Meet Our Leadership</h2>
+          <h2 className="text-3xl font-bold text-primary font-headline">Meet Our Founder</h2>
           <p className="mt-4 max-w-2xl mx-auto text-muted-foreground">
-            Our team consists of experienced professionals dedicated to advancing defence technology.
+           Our company was conceptualized by young innovator Chandan Kumar, a B.Tech CSE student and NCC LCPL.
           </p>
-          <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8 mt-12">
+          <div className="flex justify-center mt-12">
             {teamMembers.map((member) => (
-              <Card key={member.name} className="text-center pt-6">
+              <Card key={member.name} className="text-center pt-6 max-w-sm">
                 <CardContent className="flex flex-col items-center">
                   <Avatar className="w-24 h-24 mb-4">
                     <AvatarImage src={member.image} alt={member.name} data-ai-hint={member.hint} />
@@ -96,6 +79,15 @@ export default function AboutPage() {
               </Card>
             ))}
           </div>
+        </div>
+      </section>
+
+      <section id="why-india" className="bg-secondary py-16 md:py-24">
+        <div className="container mx-auto px-4 text-center">
+            <h2 className="text-3xl font-bold text-primary font-headline">Why This is Required for India</h2>
+            <p className="mt-4 max-w-3xl mx-auto text-muted-foreground">
+                India, despite being a major military power, still imports a large portion of its advanced weapon systems. This dependence limits strategic independence and slows down innovation. NILKAN Arms and Aerotech aims to change that. By focusing on AI-powered sniper rifles, aerial reconnaissance orbs, smart scopes, and modular weaponry, NILKAN will provide India’s armed forces with state-of-the-art, homegrown solutions that match or surpass global benchmarks. Our objective is not just to make weapons—but to build an ecosystem of indigenous innovation that supports Make in India, strengthens defense exports, and uplifts the next generation of Indian defense technocrats.
+            </p>
         </div>
       </section>
     </>

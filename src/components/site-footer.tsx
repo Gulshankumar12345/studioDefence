@@ -1,5 +1,6 @@
 import { Linkedin, Twitter, Youtube } from 'lucide-react';
 import Link from 'next/link';
+import { Shield } from 'lucide-react';
 
 const SiteFooter = () => {
   return (
@@ -7,9 +8,12 @@ const SiteFooter = () => {
       <div className="container mx-auto px-4 py-8 sm:py-12">
         <div className="grid grid-cols-1 gap-8 md:grid-cols-4">
           <div className="md:col-span-2">
-            <h2 className="text-2xl font-bold font-headline">Nilkanth Defence Systems</h2>
+            <h2 className="text-2xl font-bold font-headline flex items-center gap-2">
+              <Shield className="h-7 w-7 text-accent" />
+              NILKAN Arms and Aerotech
+            </h2>
             <p className="mt-2 text-primary-foreground/80 max-w-md">
-              Pioneering the next generation of defence technology to ensure a safer and more secure future.
+              Born in Bharat, Built for Warriors.
             </p>
           </div>
           <div>
@@ -28,10 +32,15 @@ const SiteFooter = () => {
               <Link href="#" aria-label="LinkedIn" className="hover:text-accent transition-colors"><Linkedin /></Link>
               <Link href="#" aria-label="YouTube" className="hover:text-accent transition-colors"><Youtube /></Link>
             </div>
+             <div className="mt-4 text-sm text-primary-foreground/60">
+                <p>Domain Suggestions:</p>
+                <p>nilkanarms.in</p>
+                <p>nilkanaerotech.com</p>
+            </div>
           </div>
         </div>
         <div className="mt-8 border-t border-primary-foreground/20 pt-6 text-center text-sm text-primary-foreground/60">
-          <p>&copy; {new Date().getFullYear()} Nilkanth Defence Systems. All Rights Reserved.</p>
+          <p>&copy; {new Date().getFullYear()} NILKAN Arms and Aerotech Pvt. Ltd. All Rights Reserved.</p>
         </div>
       </div>
     </footer>

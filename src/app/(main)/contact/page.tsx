@@ -16,8 +16,8 @@ import {
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
 import { useToast } from "@/hooks/use-toast";
-import { Mail, MapPin, Phone } from "lucide-react";
-import Image from "next/image";
+import { Mail, MapPin, Phone, Briefcase } from "lucide-react";
+import Link from "next/link";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -76,32 +76,31 @@ export default function ContactPage() {
                 <div className="flex items-start gap-4">
                   <MapPin className="h-8 w-8 text-accent mt-1" />
                   <div>
-                    <h3 className="text-xl font-semibold font-headline">Headquarters</h3>
-                    <p className="text-muted-foreground">123 Defence Colony, New Delhi, India 110024</p>
+                    <h3 className="text-xl font-semibold font-headline">Address</h3>
+                    <p className="text-muted-foreground">Khapura, Paliganj, Patna – 801110, Bihar</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Phone className="h-8 w-8 text-accent mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold font-headline">Phone</h3>
-                    <p className="text-muted-foreground">+91 11 4055 6077</p>
+                    <p className="text-muted-foreground">+91 7209911819</p>
                   </div>
                 </div>
                 <div className="flex items-start gap-4">
                   <Mail className="h-8 w-8 text-accent mt-1" />
                   <div>
                     <h3 className="text-xl font-semibold font-headline">Email</h3>
-                    <p className="text-muted-foreground">inquiries@nilkanarms.in</p>
+                    <p className="text-muted-foreground">chandankumar04042005@gmail.com</p>
                   </div>
                 </div>
-              </div>
-              <div className="mt-12">
-                  <Image src="https://placehold.co/800x600.png"
-                    width={800} height={600}
-                    alt="Map showing office location"
-                    data-ai-hint="map location"
-                    className="rounded-lg shadow-md"
-                  />
+                 <div className="flex items-start gap-4">
+                  <Briefcase className="h-8 w-8 text-accent mt-1" />
+                  <div>
+                    <h3 className="text-xl font-semibold font-headline">Join Us / Careers</h3>
+                    <p className="text-muted-foreground">Are you a young innovator passionate about defence tech? Reach out to join our vision!</p>
+                  </div>
+                </div>
               </div>
             </div>
             
@@ -116,7 +115,7 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Full Name</FormLabel>
                         <FormControl>
-                          <Input placeholder="John Doe" {...field} />
+                          <Input placeholder="Your Name" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -129,7 +128,7 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Email Address</FormLabel>
                         <FormControl>
-                          <Input placeholder="john.doe@example.com" {...field} />
+                          <Input placeholder="your.email@example.com" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>
@@ -142,7 +141,7 @@ export default function ContactPage() {
                       <FormItem>
                         <FormLabel>Subject</FormLabel>
                         <FormControl>
-                          <Input placeholder="Inquiry about Project Vigilant Eye" {...field} />
+                          <Input placeholder="Inquiry about NILKAN 09" {...field} />
                         </FormControl>
                         <FormMessage />
                       </FormItem>

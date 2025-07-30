@@ -41,7 +41,7 @@ export default function LoginPage() {
             <CardContent className="space-y-4">
             <div className="space-y-2">
                 <Label htmlFor="email">Email</Label>
-                <Input id="email" type="email" placeholder="admin@nilkanarms.in" required />
+                <Input id="email" type="email" placeholder="chandan@nilkanarms.in" required />
             </div>
             <div className="space-y-2">
                 <Label htmlFor="password">Password</Label>
@@ -50,7 +50,7 @@ export default function LoginPage() {
             </CardContent>
             <CardFooter className="flex flex-col">
             <Button type="submit" className="w-full bg-primary text-primary-foreground hover:bg-primary/90">
-                Login
+                Secure Login
             </Button>
             </CardFooter>
         </form>

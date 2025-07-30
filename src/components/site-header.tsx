@@ -24,7 +24,7 @@ const SiteHeader = () => {
       href={href}
       className={cn(
         "text-sm font-medium transition-colors hover:text-accent",
-        pathname === href ? "text-accent" : "text-primary-foreground",
+        pathname === href ? "text-accent font-bold" : "text-primary-foreground",
         className
       )}
       onClick={() => setIsMobileMenuOpen(false)}
@@ -38,7 +38,7 @@ const SiteHeader = () => {
       <div className="container flex h-16 items-center justify-between px-4 sm:px-6 lg:px-8">
         <Link href="/" className="flex items-center gap-2">
           <Shield className="h-7 w-7 text-accent" />
-          <span className="text-lg font-bold text-primary-foreground font-headline">Nilkanth</span>
+          <span className="text-lg font-bold text-primary-foreground font-headline">NILKAN</span>
         </Link>
         
         <nav className="hidden md:flex items-center gap-6">
@@ -64,7 +64,7 @@ const SiteHeader = () => {
                 <div className="flex justify-between items-center mb-8">
                     <Link href="/" className="flex items-center gap-2" onClick={() => setIsMobileMenuOpen(false)}>
                         <Shield className="h-7 w-7 text-accent" />
-                        <span className="text-lg font-bold text-primary-foreground font-headline">Nilkanth</span>
+                        <span className="text-lg font-bold text-primary-foreground font-headline">NILKAN</span>
                     </Link>
                     <Button variant="ghost" size="icon" onClick={() => setIsMobileMenuOpen(false)} className="text-primary-foreground hover:bg-primary-foreground/10">
                         <X className="h-6 w-6" />

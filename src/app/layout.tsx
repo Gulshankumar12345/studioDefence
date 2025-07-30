@@ -15,8 +15,8 @@ const spaceGrotesk = Space_Grotesk({
 });
 
 export const metadata: Metadata = {
-  title: 'Nilkanth Defence Systems',
-  description: 'Engineering the Future of Defence',
+  title: 'NILKAN Arms and Aerotech Pvt. Ltd.',
+  description: 'Born in Bharat, Built for Warriors.',
   icons: {
     icon: '/favicon.ico',
   }
